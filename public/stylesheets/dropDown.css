@@ -1,0 +1,44 @@
+a{
+  text-decoration: none;
+  color: black;
+}
+
+.navBarOption{
+    position: relative;
+  }
+  
+  .navBarOption:hover .bar{
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .navBarOption:hover .dropDownMenu{
+    right: 0;
+    top: 100%;
+    opacity: 1;
+  }
+  
+  .bar{
+    width: 0%;
+    margin-left: 50%; 
+    height: 5px;
+    background-color: gray;
+    transition: linear width 0.1s, linear margin-left 0.1s;
+  }
+  
+  .dropDownMenu{
+    background-color: white;
+    position: absolute;
+    top: 200%;
+    right: 101vw;
+    opacity: 0;
+    transition: opacity 0.1s linear, top 0.1s linear;
+    width: 100%;
+  }
+  
+  .dropDownMenuItem{
+    padding: 8px;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid whitesmoke;
+  }

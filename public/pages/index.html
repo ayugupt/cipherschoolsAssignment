@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>CipherSchools</title>
+
+        <link rel="stylesheet" href="/stylesheets/style.css"/>
+        <link rel="stylesheet" href="/stylesheets/dropDown.css"/>
+        <link rel="stylesheet" href="/stylesheets/overlay.css"/>
+        <link rel="stylesheet" href="/stylesheets/videoHolder.css"/>
+
+
+        <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-transition-group/4.3.0/react-transition-group.min.js"></script>
+    </head>
+    <body>
+        <div class="overlay">
+        </div>
+        <div id="navBar">
+            <div id="leftNav">
+                <div class="iconButton" id="sideMenuButton" style="margin-right: 32px;">
+                    <img src="/images/menu.svg" width="50%"/>
+                </div>
+                <a href="/pages/index.html">
+                    <img src="/images/twitch.png" height="80vh"/>
+                </a>
+            </div>
+            <div id="rightNav">
+                <div class="navBarOption">
+                    <div style="display: flex; align-items: center;">
+                        <img src="/images/unnamed.png" height="75vh"/>
+                        <h2 id="profileUsername">Profile</h2>
+                    </div>
+                    <div class="bar"></div>
+                    <div class="menuHolder"></div>
+                </div>
+            </div>
+        </div>
+        <div id="sideMenu">
+            <div style="display: flex; width: 100%; align-items:flex-end; border-bottom-color: lightgray; border-bottom-width: 1px; margin-top: 40px;" id="seeLike">
+                <div style="flex-grow: 1; flex-basis: auto; flex-shrink: 1; text-align: center; font-size: 20px; height: 20px;">Liked Videos</div>
+                <img src="/images/like.svg" style="height: 25px; margin-right: 8px;"/>
+            </div>
+        </div>
+        <div id="remainingBody" style="position: absolute; top: 11%; width: 100%;">
+
+        </div>
+        <script type="text/javascript" src="/javascripts/iconButton.js"></script>
+        <script type="text/babel" src="/javascripts/overlay.js"></script>
+        <script type="text/babel" src="/javascripts/dropDownMenu.js"></script>
+        <script type="text/javascript" src="/javascripts/pickVideo.js"></script>
+        <script type="text/babel" src="/javascripts/videoHolder.js"></script>
+        <script type="text/babel" src="/javascripts/likedVideos.js"></script>
+        <script type="text/babel">
+            var vidReq = new XMLHttpRequest();
+            vidReq.open('GET', 'http://localhost:3000/getAllVideos', true);
+            vidReq.send();
+
+            vidReq.addEventListener("load", function(){
+                let result = JSON.parse(this.responseText);
+                let data = result.data;
+                var temp;
+                for(var i = 0; i < data.length; i++){
+                    if(i%3 == 0){
+                        temp = document.createElement('div');
+                        temp.className = "homeVid";
+                        document.getElementById("remainingBody").appendChild(temp);
+                    }
+                    var single = document.createElement("div");
+                    temp.appendChild(single);
+                    ReactDOM.render(<VideoHolder title={data[i].title} src={data[i].file_name} uploader={data[i].uploader} likes={data[i].likes} id={data[i].id}/>, single);
+                }
+            })
+
+            document.getElementById("profileUsername").innerHTML = localStorage["username"];
+        </script>
+        
+    </body>
+</html>

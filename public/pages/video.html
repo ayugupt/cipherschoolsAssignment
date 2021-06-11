@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>CipherSchools</title>
+
+        <link rel="stylesheet" href="/stylesheets/style.css"/>
+        <link rel="stylesheet" href="/stylesheets/dropDown.css"/>
+
+
+        <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-transition-group/4.3.0/react-transition-group.min.js"></script>
+    </head>
+    <body>
+        <div id="navBar" style="z-index: 3;">
+            <div id="leftNav">
+                <div class="iconButton" id="sideMenuButton">
+                    <img src="/images/menu.svg" width="50%"/>
+                </div>
+                <a href="/pages/index.html">
+                    <img src="/images/twitch.png" height="80vh"/>
+                </a>
+            </div>
+            <div id="rightNav">
+                <div class="navBarOption">
+                    <div style="display: flex; align-items: center;">
+                        <img src="/images/unnamed.png" height="75vh"/>
+                        <h2>Profile</h2>
+                    </div>
+                    <div class="bar"></div>
+                    <div class="menuHolder"></div>
+                </div>
+            </div>
+        </div>
+        <div id="sideMenu"></div>
+        <div id="remainingBody" style="position: absolute; top: 11%; width: 100%; padding-left: 15%; padding-right: 15%; padding-top: 3%; font-size: 24px">
+            <video id="video" autoplay controls style="width:100%"></video>
+            <h1 id="title"></h1>
+            <div style="display: flex; justify-content: space-between; width: 100%;">
+                <p id="uploader"></p>
+                <div id="incLike" style="display: flex; flex-direction: column; align-items: center;">
+                    <object id="likeButton" data="/images/like.svg" height="30"></object>
+                    <div id="likes" style="margin-top: 8px;"></div>
+                </div>
+            </div>
+            <p id="description"></p>
+        </div>
+        <script type="text/javascript" src="/javascripts/iconButton.js"></script>
+        <script type="text/babel" src="/javascripts/dropDownMenu.js"></script>
+        <script>
+            var req = new XMLHttpRequest();
+            req.open('GET', `http://localhost:3000/getVideo?id=${localStorage.video}`, true);
+            req.send();
+
+            req.addEventListener("load", function(){
+                var response = JSON.parse(this.responseText);
+                var data = response.data[0];
+                document.getElementById("video").src = "/"+data.file_name;
+                document.getElementById("title").innerHTML = data.title;
+                document.getElementById("description").innerHTML = data.description;
+                document.getElementById("uploader").innerHTML = "Uploaded by: "+ data.uploader;
+                document.getElementById("likes").innerHTML = data.likes;
+            })
+
+            window.addEventListener("load", function(){
+                var content = document.getElementById("likeButton").contentDocument;
+                var items = content.getElementsByTagName("path");
+
+                document.getElementById("incLike").addEventListener("click", function(){
+                    var lik = new XMLHttpRequest();
+                    lik.open('POST', 'http://localhost:3000/incrementLike', true);
+                    lik.setRequestHeader("Content-Type", "application/json")
+                    lik.send(JSON.stringify({
+                        username:localStorage["username"],
+                        video_id: localStorage["video"]
+                    }))
+
+                    lik.addEventListener("load", function(){
+                        items[0].style.fill = "blue";
+                        items[1].style.fill = "blue";
+                        document.getElementById("likes").innerHTML = parseInt(document.getElementById("likes").innerHTML)+1;
+                    })
+                })
+
+
+            })
+        </script>
+    </body>
+</html>

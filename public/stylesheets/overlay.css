@@ -1,0 +1,97 @@
+.overlay{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlayWindow{
+    width: 60%;
+    height: 70%;
+    border-radius: 20px;
+    background-color: white; 
+    padding: 16px;
+    font-size: 20px;
+    opacity: 1;
+}
+
+.overlayAnim-appear{
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.overlayAnim-appear-active{
+    width: 60%;
+    height: 70%;
+    opacity: 1;
+    transition: width 0.3s linear, height 0.3s linear, opacity 0.3s linear;
+}
+
+.overlayAnim-appear-done{
+    width: 60%;
+    height: 70%;
+    opacity: 1;
+}
+
+.overlayAnim-exit{
+    width: 60%;
+    height: 70;
+    opacity: 1;
+}
+
+.overlayAnim-exit-active{
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: width 0.3s linear, height 0.3s linear, opacity 0.3s linear;
+}
+
+.overlayAnime-exit-done{
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.flexDiv{
+    height: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#title{
+    width: 40%;
+    padding: 12px 20px;
+    border-radius: 4px;
+    border-color: lightgray;
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+#desc{
+    width: 50%;
+    padding: 12px 20px;
+    border-radius: 4px;
+    border-color: lightgray;
+    border-left-color: rgba(0, 0, 0, 0.4);
+    border-top-color: rgba(0, 0, 0, 0.4);
+    border-width: 2px;
+    font-size: 20px;
+    margin-top: 8px;
+    resize: none;
+}
+
+#submit{
+    height: 60px;
+    width: 120px;
+}
+
+#video{
+    display: none;
+}

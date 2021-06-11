@@ -1,0 +1,14 @@
+.videoHolder{
+    width: 30vw;
+    height: 40vh;
+    padding: 16px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.homeVid{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 2vh;
+}
